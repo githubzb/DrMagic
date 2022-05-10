@@ -18,6 +18,7 @@
 		6D3AB3EE282948CA00A2853C /* CGRectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3AB3ED282948CA00A2853C /* CGRectTest.swift */; };
 		6D3AB3F128294AD400A2853C /* MagicBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3AB3F028294AD400A2853C /* MagicBox.swift */; };
 		6D3AB3F328295BB700A2853C /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3AB3F228295BB700A2853C /* String+ext.swift */; };
+		6D52595F282A8E2B00F199F6 /* DataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D52595E282A8E2B00F199F6 /* DataTest.swift */; };
 		849B173E282A498F00C09C4F /* StringTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B173D282A498F00C09C4F /* StringTest.swift */; };
 		849B1740282A509F00C09C4F /* Data+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B173F282A509F00C09C4F /* Data+ext.swift */; };
 /* End PBXBuildFile section */
@@ -37,6 +38,7 @@
 		6D3AB3ED282948CA00A2853C /* CGRectTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectTest.swift; sourceTree = "<group>"; };
 		6D3AB3F028294AD400A2853C /* MagicBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBox.swift; sourceTree = "<group>"; };
 		6D3AB3F228295BB700A2853C /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
+		6D52595E282A8E2B00F199F6 /* DataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTest.swift; sourceTree = "<group>"; };
 		849B173D282A498F00C09C4F /* StringTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTest.swift; sourceTree = "<group>"; };
 		849B173F282A509F00C09C4F /* Data+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				849B173D282A498F00C09C4F /* StringTest.swift */,
+				6D52595E282A8E2B00F199F6 /* DataTest.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D3AB3DE2829487000A2853C /* ViewController.swift in Sources */,
+				6D52595F282A8E2B00F199F6 /* DataTest.swift in Sources */,
 				6D3AB3DA2829487000A2853C /* AppDelegate.swift in Sources */,
 				6D3AB3DC2829487000A2853C /* SceneDelegate.swift in Sources */,
 				6D3AB3EE282948CA00A2853C /* CGRectTest.swift in Sources */,

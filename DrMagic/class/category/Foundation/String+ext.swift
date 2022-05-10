@@ -47,6 +47,40 @@ extension MagicBox where T == String {
         return MagicBox(str)
     }
     
+    public var md5: Self {
+        guard let data = value.data(using: .utf8) else {
+            return self
+        }
+        return MagicBox(data.mg.md5String)
+    }
+    
+    public var sha1: Self {
+        guard let data = value.data(using: .utf8) else {
+            return self
+        }
+        return MagicBox(data.mg.sha1String)
+    }
+    
+    public var sha256: Self {
+        guard let data = value.data(using: .utf8) else {
+            return self
+        }
+        return MagicBox(data.mg.sha256String)
+    }
+    
+    public var sha384: Self {
+        guard let data = value.data(using: .utf8) else {
+            return self
+        }
+        return MagicBox(data.mg.sha384String)
+    }
+    
+    public var sha512: Self {
+        guard let data = value.data(using: .utf8) else {
+            return self
+        }
+        return MagicBox(data.mg.sha512String)
+    }
     
     
     fileprivate static let afURLQueryAllowed: CharacterSet = {
