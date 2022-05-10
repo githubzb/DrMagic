@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func runTest() {
         rectTest()
+        stringTest()
     }
 
 }

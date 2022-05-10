@@ -37,4 +37,5 @@ func rectTest() {
         .inset(by: UIEdgeInsets(top: 10, left: 30, bottom: 20, right: 20))
         .value
     assert(modifyRect5 == CGRect(x: 30, y: 10, width: 50, height: 70), "CGRect test fail.")
+    
 }
