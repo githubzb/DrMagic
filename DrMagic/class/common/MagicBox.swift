@@ -25,3 +25,10 @@ extension MagicBoxExt {
     public var mg: MagicBox<Self> { MagicBox(self) }
     public static var mg: MagicBox<Self.Type> { MagicBox(self) }
 }
+
+extension MagicBox where T: Equatable {
+    
+    static func ==(hls: MagicBox, rls: MagicBox) -> Bool {
+        hls.value == rls.value
+    }
+}

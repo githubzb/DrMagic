@@ -99,26 +99,6 @@ extension MagicBox where T == Data {
         }
     }
     
-    public func isValid(hmac: String, hmacType: HMACType , key: String) -> Bool {
-        guard let hmacData = hmac.data(using: .utf8), let keyData = key.data(using: .utf8) else {
-            return false
-        }
-        let _key = SymmetricKey(data: keyData)
-        switch hmacType {
-        case .md5:
-            let _hmac = HashedAuthenticationCode<Insecure.MD5>(bytes)
-            return HMAC<Insecure.MD5>.isValidAuthenticationCode(hmacData, authenticating: value, using: _key)
-        case .sha1:
-            <#code#>
-        case .sha256:
-            <#code#>
-        case .sha384:
-            <#code#>
-        case .sha512:
-            <#code#>
-        }
-    }
-    
 }
 
 

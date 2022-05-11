@@ -82,6 +82,14 @@ extension MagicBox where T == String {
         return MagicBox(data.mg.sha512String)
     }
     
+    public func hmac(type: MagicBox<Data>.HMACType, key: String) -> Self {
+        guard let data = value.data(using: .utf8),
+              let hmac = data.mg.hmac(type: type, key: key) else {
+            return self
+        }
+        return MagicBox(hmac)
+    }
+    
     
     fileprivate static let afURLQueryAllowed: CharacterSet = {
         let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
