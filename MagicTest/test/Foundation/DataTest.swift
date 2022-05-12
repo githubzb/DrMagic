@@ -36,4 +36,5 @@ func dataTest() {
     let data2 = "12345".data(using: .utf8)!
     let data2Str = data2.mg.utf8String
     assert(data2Str == "12345", "utf8String fail")
+    
 }

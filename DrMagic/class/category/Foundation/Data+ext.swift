@@ -10,7 +10,7 @@ import CryptoKit
 
 extension Data: MagicBoxExt {}
 
-// MARK: - encode and decode
+// MARK: - hash
 extension MagicBox where T == Data {
     
     public var md5String: String {
@@ -110,4 +110,9 @@ extension MagicBox where T == Data {
     public func toString(encoding: String.Encoding = .utf8) -> String {
         String(data: value, encoding: encoding) ?? ""
     }
+    
+    /// 16进制字符串（小写）
+    public var hexString: String { value.map({ String(format: "%02x", $0) }).joined() }
+    /// 16进制字符串（大写）
+    public var hexStringUpperCase: String { value.map({ String(format: "%02X", $0) }).joined() }
 }

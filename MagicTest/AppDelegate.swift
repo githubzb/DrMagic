@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rectTest()
         stringTest()
         dataTest()
+        chachaPolyTest()
     }
 
 }

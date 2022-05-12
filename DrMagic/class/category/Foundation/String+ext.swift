@@ -42,10 +42,27 @@ extension MagicBox where T == String {
         return MagicBox(str)
     }
     
+    public func percentEncoding(withAllowedCharacters charset: CharacterSet) -> Self {
+        let str = value.addingPercentEncoding(withAllowedCharacters: charset) ?? value
+        return MagicBox(str)
+    }
+    
     public var urlDecoding: Self {
         let str = value.removingPercentEncoding ?? value
         return MagicBox(str)
     }
+    
+    fileprivate static let afURLQueryAllowed: CharacterSet = {
+        let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
+        let subDelimitersToEncode = "!$&'()*+,;="
+        let encodableDelimiters = CharacterSet(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
+        return CharacterSet.urlQueryAllowed.subtracting(encodableDelimiters)
+    }()
+    
+}
+
+// MARK: - hash
+extension MagicBox where T == String {
     
     public var md5: Self {
         guard let data = value.data(using: .utf8) else {
@@ -89,13 +106,25 @@ extension MagicBox where T == String {
         }
         return MagicBox(hmac)
     }
+}
+
+
+// MARK: - tools
+extension MagicBox where T == String {
     
-    
-    fileprivate static let afURLQueryAllowed: CharacterSet = {
-        let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
-        let subDelimitersToEncode = "!$&'()*+,;="
-        let encodableDelimiters = CharacterSet(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
-        return CharacterSet.urlQueryAllowed.subtracting(encodableDelimiters)
-    }()
-    
+    /// 16进制Data
+    public var hexData: Data {
+        let bytes = sequence(state: value.startIndex) { startIndex -> UInt8? in
+            guard startIndex < value.endIndex else {
+                return nil
+            }
+            // 每两个字符计算一个UInt8
+            let endIndex = value.index(startIndex, offsetBy: 2, limitedBy: value.endIndex) ?? value.endIndex
+            defer {
+                startIndex = endIndex
+            }
+            return UInt8(value[startIndex..<endIndex], radix: 16)
+        }
+        return Data(bytes)
+    }
 }
