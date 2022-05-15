@@ -25,6 +25,20 @@ public enum DrChaChaPoly {
         guard let msgData = message.data(using: .utf8) else {
             throw MagicError.invalidParameter("message转UTF8 Data失败")
         }
+        return try encrypt(message: msgData, keyHex: keyHex, nonceHex: nonceHex, authenticating: authenticating)
+    }
+    
+    /**
+     加密
+     
+     - Parameter message: 待加密的明文数据
+     - Parameter keyHex: 秘钥key（16进制字符串，64字节长度）
+     - Parameter nonceHex: 随机串，参与加密（16进制字符串，24字节长度）
+     - Parameter authenticating: 校验字符串，只做校验，不参与加密（可以理解为签名，会经过UTF8编码）
+     
+     - Returns  加密后的结果DrChaChaPoly.SealedBox
+     */
+    public static func encrypt(message: Data, keyHex: String, nonceHex: String?, authenticating: String) throws -> DrChaChaPoly.SealedBox {
         guard let authData = authenticating.data(using: .utf8) else {
             throw MagicError.invalidParameter("authenticating转UTF8 Data失败")
         }
@@ -35,7 +49,7 @@ public enum DrChaChaPoly {
         }else {
             nonce = nil
         }
-        let box = try ChaChaPoly.seal(msgData, using: key, nonce: nonce, authenticating: authData)
+        let box = try ChaChaPoly.seal(message, using: key, nonce: nonce, authenticating: authData)
         return .init(ciphertext: box.ciphertext, tag: box.tag, nonce: box.nonce.data)
     }
     
@@ -52,6 +66,19 @@ public enum DrChaChaPoly {
         guard let msgData = message.data(using: .utf8) else {
             throw MagicError.invalidParameter("message转UTF8 Data失败")
         }
+        return try encrypt(message: msgData, keyHex: keyHex, nonceHex: nonceHex)
+    }
+    
+    /**
+     加密
+     
+     - Parameter message: 待加密的明文数据
+     - Parameter keyHex: 秘钥key（16进制字符串，64字节长度）
+     - Parameter nonceHex: 随机串，参与加密（16进制字符串，24字节长度）
+     
+     - Returns  加密后的结果DrChaChaPoly.SealedBox
+     */
+    public static func encrypt(message: Data, keyHex: String, nonceHex: String?) throws -> DrChaChaPoly.SealedBox {
         let key = SymmetricKey(data: keyHex.mg.hexData)
         let nonce: ChaChaPoly.Nonce?
         if let nonceHex = nonceHex {
@@ -59,7 +86,7 @@ public enum DrChaChaPoly {
         }else {
             nonce = nil
         }
-        let box = try ChaChaPoly.seal(msgData, using: key, nonce: nonce)
+        let box = try ChaChaPoly.seal(message, using: key, nonce: nonce)
         return .init(ciphertext: box.ciphertext, tag: box.tag, nonce: box.nonce.data)
     }
     
@@ -69,9 +96,11 @@ public enum DrChaChaPoly {
      - Parameter sealedBox: 加密结果
      - Parameter keyHex: 秘钥key（16进制字符串，64字节长度）
      - Parameter authenticating: 校验字符串
+     
+     - Returns 解密后的字符串
      */
     public static func decrypt(sealedBox: DrChaChaPoly.SealedBox, keyHex: String, authenticating: String) throws -> String {
-        let data = try sealedBox.decrypt(keyHex: keyHex, authenticating: authenticating)
+        let data = try decryptData(sealedBox: sealedBox, keyHex: keyHex, authenticating: authenticating)
         return String(data: data, encoding: .utf8) ?? ""
     }
     
@@ -80,10 +109,37 @@ public enum DrChaChaPoly {
      
      - Parameter sealedBox: 加密结果
      - Parameter keyHex: 秘钥key（16进制字符串，64字节长度）
+     - Parameter authenticating: 校验字符串
+     
+     - Returns 解密后的数据
+     */
+    public static func decryptData(sealedBox: DrChaChaPoly.SealedBox, keyHex: String, authenticating: String) throws -> Data {
+        try sealedBox.decrypt(keyHex: keyHex, authenticating: authenticating)
+    }
+    
+    /**
+     解密
+     
+     - Parameter sealedBox: 加密结果
+     - Parameter keyHex: 秘钥key（16进制字符串，64字节长度）
+     
+     - Returns 解密后的字符串
      */
     public static func decrypt(sealedBox: DrChaChaPoly.SealedBox, keyHex: String) throws -> String {
-        let data = try sealedBox.decrypt(keyHex: keyHex)
+        let data = try decryptData(sealedBox: sealedBox, keyHex: keyHex)
         return String(data: data, encoding: .utf8) ?? ""
+    }
+    
+    /**
+     解密
+     
+     - Parameter sealedBox: 加密结果
+     - Parameter keyHex: 秘钥key（16进制字符串，64字节长度）
+     
+     - Returns 解密后的数据
+     */
+    public static func decryptData(sealedBox: DrChaChaPoly.SealedBox, keyHex: String) throws -> Data {
+        try sealedBox.decrypt(keyHex: keyHex)
     }
     
 }
@@ -149,7 +205,7 @@ extension DrChaChaPoly {
     /// 生成chacha poly1305 加密 key（16进制字符串）
     public static var generateKeyHex: String { generateKeyData.mg.hexString }
     
-    /// 生成随机串
+    /// 生成随机串（16进制字符串）
     public static var nonceHex: String {
         ChaChaPoly.Nonce().withUnsafeBytes { bf -> Data in
             guard let base = bf.baseAddress else {
@@ -167,19 +223,19 @@ extension DrChaChaPoly {
         
         /// The combined representation ( nonce || ciphertext || tag)
         public var combined: Data { nonce + ciphertext + tag }
-        public var combinedHexStr: String { combined.map({String(format: "%02x", $0)}).joined() }
+        public var combinedHexStr: String { combined.mg.hexString }
 
         /// The authentication tag
         public let tag: Data
-        public var tagHexStr: String { tag.map({String(format: "%02x", $0)}).joined() }
+        public var tagHexStr: String { tag.mg.hexString }
 
         /// The ciphertext
         public let ciphertext: Data
-        public var cipherTextHexStr: String { ciphertext.map({String(format: "%02x", $0)}).joined() }
+        public var cipherTextHexStr: String { ciphertext.mg.hexString }
 
         /// The Nonce
         public let nonce: Data
-        public var nonceHexStr: String { nonce.map({String(format: "%02x", $0)}).joined() }
+        public var nonceHexStr: String { nonce.mg.hexString }
         
         /**
          初始化SealedBox
