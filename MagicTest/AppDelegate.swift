@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         chachaPolyTest()
         aesTest()
         curve25519Test()
+        hkdfTest()
     }
 
 }

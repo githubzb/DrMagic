@@ -19,27 +19,32 @@ func aesTest() {
     assert(key256.count == 32, "generate256Key fail")
     
     // 封装加密key，用于封装的key采用128位
-    do {
-        let keyToWrap = DrAES.generate128KeyHex
-        let key = DrAES.generate128KeyHex
-        let wrappedKey = try DrAES.wrap(keyToWrap, byKeyHex: key)
-        assert(keyToWrap.count > 0 && wrappedKey.count > 0 && keyToWrap != wrappedKey, "key wrap fail")
-        let unwrapKey = try DrAES.unwrap(wrappedKey, byKeyHex: key)
-        assert(unwrapKey == keyToWrap, "key unwrap fail")
-    } catch {
-        assert(false, "aes key wrap fail.\(error)")
+    if #available(iOS 15.0, *) {
+        do {
+            let keyToWrap = DrAES.generate128KeyHex
+            let key = DrAES.generate128KeyHex
+            
+            let wrappedKey = try DrAES.wrap(keyToWrap, byKeyHex: key)
+            assert(keyToWrap.count > 0 && wrappedKey.count > 0 && keyToWrap != wrappedKey, "key wrap fail")
+            let unwrapKey = try DrAES.unwrap(wrappedKey, byKeyHex: key)
+            assert(unwrapKey == keyToWrap, "key unwrap fail")
+        } catch {
+            assert(false, "aes key wrap fail.\(error)")
+        }
     }
     
     // 封装加密key，用于封装的key采用256位
-    do {
-        let keyToWrap = DrAES.generate128KeyHex
-        let key = DrAES.generate256KeyHex
-        let wrappedKey = try DrAES.wrap(keyToWrap, byKeyHex: key)
-        assert(keyToWrap.count > 0 && wrappedKey.count > 0 && keyToWrap != wrappedKey, "key wrap fail")
-        let unwrapKey = try DrAES.unwrap(wrappedKey, byKeyHex: key)
-        assert(unwrapKey == keyToWrap, "key unwrap fail")
-    } catch {
-        assert(false, "aes key wrap fail.\(error)")
+    if #available(iOS 15.0, *) {
+        do {
+            let keyToWrap = DrAES.generate128KeyHex
+            let key = DrAES.generate256KeyHex
+            let wrappedKey = try DrAES.wrap(keyToWrap, byKeyHex: key)
+            assert(keyToWrap.count > 0 && wrappedKey.count > 0 && keyToWrap != wrappedKey, "key wrap fail")
+            let unwrapKey = try DrAES.unwrap(wrappedKey, byKeyHex: key)
+            assert(unwrapKey == keyToWrap, "key unwrap fail")
+        } catch {
+            assert(false, "aes key wrap fail.\(error)")
+        }
     }
     
     
