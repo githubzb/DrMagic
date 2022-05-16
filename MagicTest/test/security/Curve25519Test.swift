@@ -74,4 +74,66 @@ func curve25519Test() {
         assert(false, "签名操作失败: \(error)")
     }
     
+    
+    // 测试共享秘钥（共享秘钥需要通过秘钥协议来生成）
+    
+    // 服务导出的秘钥协议
+    let serverKeyAgreement = DrCurve25519.generateKeyAgreement
+    // 客户端导出的秘钥协议
+    let appKeyAgreement = DrCurve25519.generateKeyAgreement
+    
+    // 服务端将秘钥协议中的公钥发送给客户端，客户端生成共享秘钥协议
+    let appShareKeyAgreement = DrCurve25519.KeyAgreement(privateKey: appKeyAgreement.privateKeyData, publicKey: serverKeyAgreement.publicKeyData)
+    
+    // 客户端将秘钥协议中的公钥发送给服务端，服务端生成共享秘钥协议
+    let serverShareKeyAgreement = DrCurve25519.KeyAgreement(privateKey: serverKeyAgreement.privateKeyData, publicKey: appKeyAgreement.publicKeyData)
+    
+    do {
+        // 生成客户端的共享秘钥
+        let appKey = try appShareKeyAgreement.shareKeyHex()
+        // 生成服务端的共享秘钥
+        let serverKey = try serverShareKeyAgreement.shareKeyHex()
+        
+        assert(appKey.count > 0 &&  appKey == serverKey, "两个秘钥不一样")
+    }catch {
+        assert(false, "共享秘钥出错：\(error)")
+    }
+    
+    
+    // 测试生成HKDF推导的秘钥
+    do {
+        let salt = "abcdfdfewrefdf" // 可以用一个随机字符串
+        let shareInfo = "12121zbdfvdv"
+        let byteCount = 16
+        
+        // 生成客户端HKDF共享秘钥
+        let appKey = try appShareKeyAgreement.shareHKDFKeyHex(hashFunc: .sha256,
+                                                              salt: salt,
+                                                              shareInfo: shareInfo,
+                                                              byteCount: byteCount)
+        
+        // 生成服务端HKDF共享秘钥
+        let serverKey = try serverShareKeyAgreement.shareHKDFKeyHex(hashFunc: .sha256,
+                                                                    salt: salt,
+                                                                    shareInfo: shareInfo,
+                                                                    byteCount: byteCount)
+        assert(appKey.count == byteCount * 2 && appKey == serverKey, "导出共享秘钥有误")
+    }catch {
+        assert(false, "共享秘钥出错：\(error)")
+    }
+    
+    // 测试生成X9.63
+    do {
+        let shareInfo = "12121zbdfvdv"
+        let byteCount = 16
+        
+        // 生成客户端X9.63共享秘钥
+        let appKey = try appShareKeyAgreement.shareX963KeyHex(hashFunc: .sha256, shareInfo: shareInfo, byteCount: byteCount)
+        // 生成服务端X9.63共享秘钥
+        let serverKey = try serverShareKeyAgreement.shareX963KeyHex(hashFunc: .sha256, shareInfo: shareInfo, byteCount: byteCount)
+        
+        assert(appKey.count == byteCount * 2 && appKey == serverKey, "导出共享秘钥有误")
+    }catch {
+        assert(false, "共享秘钥出错：\(error)")
+    }
 }
