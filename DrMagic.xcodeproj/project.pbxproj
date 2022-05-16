@@ -28,6 +28,7 @@
 		849B1745282D051C00C09C4F /* DrChaChaPoly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B1744282D051C00C09C4F /* DrChaChaPoly.swift */; };
 		849B1748282D180A00C09C4F /* ChaChaPolyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B1747282D180A00C09C4F /* ChaChaPolyTest.swift */; };
 		849B18662831DD2600C09C4F /* Curve25519Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B18652831DD2600C09C4F /* Curve25519Test.swift */; };
+		849B18692832415B00C09C4F /* DrHKDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B18682832415B00C09C4F /* DrHKDF.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		849B1744282D051C00C09C4F /* DrChaChaPoly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrChaChaPoly.swift; sourceTree = "<group>"; };
 		849B1747282D180A00C09C4F /* ChaChaPolyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaChaPolyTest.swift; sourceTree = "<group>"; };
 		849B18652831DD2600C09C4F /* Curve25519Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve25519Test.swift; sourceTree = "<group>"; };
+		849B18682832415B00C09C4F /* DrHKDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrHKDF.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 				849B1744282D051C00C09C4F /* DrChaChaPoly.swift */,
 				6DE003A0282FAD4B00D893B1 /* DrAES.swift */,
 				6D250C6128312EE3003B0FB6 /* DrCurve25519.swift */,
+				849B18682832415B00C09C4F /* DrHKDF.swift */,
 			);
 			path = security;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				849B1742282CEE3700C09C4F /* Error.swift in Sources */,
 				6DE003A1282FAD4B00D893B1 /* DrAES.swift in Sources */,
 				6D250C6228312EE3003B0FB6 /* DrCurve25519.swift in Sources */,
+				849B18692832415B00C09C4F /* DrHKDF.swift in Sources */,
 				849B1740282A509F00C09C4F /* Data+ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
