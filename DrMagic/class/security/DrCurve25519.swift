@@ -24,6 +24,7 @@ extension DrCurve25519 {
             return .init(privateKey: privateKey.rawRepresentation, publicKey: publicKey.rawRepresentation)
         }
         
+        /// 用于签名和验签的秘钥对儿
         @frozen public struct SignKey {
             
             /// 私钥（用于生成签名）
@@ -32,6 +33,7 @@ extension DrCurve25519 {
             public var privateKeyHex: String { privateKeyData.mg.hexString }
             /// 公钥（用于验证签名）
             public let publicKeyData: Data
+            /// 公钥（用于验证签名，16进制字符串）
             public var publicKeyHex: String { publicKeyData.mg.hexString }
             
             /**

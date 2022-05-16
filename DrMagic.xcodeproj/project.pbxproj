@@ -27,6 +27,7 @@
 		849B1742282CEE3700C09C4F /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B1741282CEE3700C09C4F /* Error.swift */; };
 		849B1745282D051C00C09C4F /* DrChaChaPoly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B1744282D051C00C09C4F /* DrChaChaPoly.swift */; };
 		849B1748282D180A00C09C4F /* ChaChaPolyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B1747282D180A00C09C4F /* ChaChaPolyTest.swift */; };
+		849B18662831DD2600C09C4F /* Curve25519Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B18652831DD2600C09C4F /* Curve25519Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		849B1741282CEE3700C09C4F /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		849B1744282D051C00C09C4F /* DrChaChaPoly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrChaChaPoly.swift; sourceTree = "<group>"; };
 		849B1747282D180A00C09C4F /* ChaChaPolyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaChaPolyTest.swift; sourceTree = "<group>"; };
+		849B18652831DD2600C09C4F /* Curve25519Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve25519Test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 			children = (
 				849B1747282D180A00C09C4F /* ChaChaPolyTest.swift */,
 				6D250C5F2830EAEA003B0FB6 /* AESTest.swift */,
+				849B18652831DD2600C09C4F /* Curve25519Test.swift */,
 			);
 			path = security;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				6D3AB3DA2829487000A2853C /* AppDelegate.swift in Sources */,
 				6D3AB3DC2829487000A2853C /* SceneDelegate.swift in Sources */,
 				6D3AB3EE282948CA00A2853C /* CGRectTest.swift in Sources */,
+				849B18662831DD2600C09C4F /* Curve25519Test.swift in Sources */,
 				849B173E282A498F00C09C4F /* StringTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
