@@ -39,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         aesTest()
         curve25519Test()
         hkdfTest()
+        characterSetTest()
+        arrayTest()
     }
 
 }

@@ -61,4 +61,10 @@ func stringTest() {
     """
     let mapArr = jsonArrMapStr.mg.jsonMapArray
     assert(mapArr != nil && (mapArr?.first?["name"] as? String) == "drbox", "jsonMapArray fail")
+    let jsonStrArr = """
+    ["a", "b", "c"]
+    """
+    let strArr = jsonStrArr.mg.jsonArray(String.self)
+    assert(strArr != nil && strArr?.count == 3, "jsonArray fail")
+    
 }

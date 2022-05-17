@@ -7,14 +7,16 @@
 
 import Foundation
 
-extension CharacterSet {
+extension CharacterSet: MagicBoxExt {}
+
+extension MagicBox where T == CharacterSet {
     
     /// 获取字符集的Unicode10进制编码集合
     public var unicodeList: [Int] {
         var result: [Int] = []
         var plane = 0
         // following documentation at https://developer.apple.com/documentation/foundation/nscharacterset/1417719-bitmaprepresentation
-        for (i, w) in bitmapRepresentation.enumerated() {
+        for (i, w) in value.bitmapRepresentation.enumerated() {
             let k = i % 0x2001
             if k == 0x2000 {
                 // plane index byte
@@ -30,7 +32,7 @@ extension CharacterSet {
     }
     
     /// 获取字符集中的字符列表
-    public var characterList: [Character] {
+    public var characters: [Character] {
         unicodeList.compactMap { code -> Character? in
             guard let scalar = UnicodeScalar(code) else {
                 return nil
@@ -40,5 +42,6 @@ extension CharacterSet {
     }
     
     /// 字符集的字符串表示
-    public var characterString: String { String(characterList) }
+    public var characterString: String { String(characters) }
+    
 }

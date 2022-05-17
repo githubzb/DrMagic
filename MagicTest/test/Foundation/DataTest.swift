@@ -37,4 +37,25 @@ func dataTest() {
     let data2Str = data2.mg.utf8String
     assert(data2Str == "12345", "utf8String fail")
     
+    let jsonMapData = """
+    {"name": "drbox", "age": 30}
+    """.data(using: .utf8)!
+    let map = jsonMapData.mg.jsonMap
+    assert(map != nil && (map?["name"] as? String) == "drbox", "jsonMap fail")
+    
+    let jsonArrMapData = """
+    [{"name": "drbox"}, {"name": "jack"}]
+    """.data(using: .utf8)!
+    let mapArr = jsonArrMapData.mg.jsonMapArray
+    assert(mapArr != nil && (mapArr?.first?["name"] as? String) == "drbox", "jsonMapArray fail")
+    let jsonStrArrData = """
+    ["a", "b", "c"]
+    """.data(using: .utf8)!
+    let strArr = jsonStrArrData.mg.jsonArray(String.self)
+    assert(strArr != nil && strArr?.count == 3, "jsonArray fail")
+    
+    let hexData = "13342765dcfc9ae6a12469ef".mg.hexData
+    let hexStr = hexData.mg.hexString
+    let hexUpperStr = hexData.mg.hexStringUpperCase
+    assert(hexStr.uppercased() == hexUpperStr, "hexStringUpperCase 不是大写")
 }
