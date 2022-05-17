@@ -15,7 +15,7 @@ func stringTest() {
     let base64DecodingStr = base64EncodingStr.mg.base64Decoding.value
     assert(base64EncodingStr.count > 0 && str == base64DecodingStr, "base64加解密失败")
     
-    let urlStr = "https://www.baidu.com?keyword=URL编码"
+    let urlStr = "https://www.baidu.com/search?keyword=URL编码"
     let urlQueryEncodingStr = urlStr.mg.urlQueryEncoding.value
     guard let _ = URL(string: urlQueryEncodingStr) else {
         assert(false, "urlQueryEncoding fail")

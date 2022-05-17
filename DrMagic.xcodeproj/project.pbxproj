@@ -30,6 +30,7 @@
 		849B1748282D180A00C09C4F /* ChaChaPolyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B1747282D180A00C09C4F /* ChaChaPolyTest.swift */; };
 		849B18662831DD2600C09C4F /* Curve25519Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B18652831DD2600C09C4F /* Curve25519Test.swift */; };
 		849B18692832415B00C09C4F /* DrHKDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B18682832415B00C09C4F /* DrHKDF.swift */; };
+		849B186B28333C0300C09C4F /* CharacterSet+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B186A28333C0300C09C4F /* CharacterSet+ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		849B1747282D180A00C09C4F /* ChaChaPolyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaChaPolyTest.swift; sourceTree = "<group>"; };
 		849B18652831DD2600C09C4F /* Curve25519Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve25519Test.swift; sourceTree = "<group>"; };
 		849B18682832415B00C09C4F /* DrHKDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrHKDF.swift; sourceTree = "<group>"; };
+		849B186A28333C0300C09C4F /* CharacterSet+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterSet+ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			children = (
 				6D3AB3F228295BB700A2853C /* String+ext.swift */,
 				849B173F282A509F00C09C4F /* Data+ext.swift */,
+				849B186A28333C0300C09C4F /* CharacterSet+ext.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 			files = (
 				6D3AB3D22829481A00A2853C /* CGRect+ext.swift in Sources */,
 				849B1745282D051C00C09C4F /* DrChaChaPoly.swift in Sources */,
+				849B186B28333C0300C09C4F /* CharacterSet+ext.swift in Sources */,
 				6D3AB3F328295BB700A2853C /* String+ext.swift in Sources */,
 				6D3AB3F128294AD400A2853C /* MagicBox.swift in Sources */,
 				849B1742282CEE3700C09C4F /* Error.swift in Sources */,
