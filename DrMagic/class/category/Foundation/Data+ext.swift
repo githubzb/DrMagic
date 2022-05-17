@@ -101,6 +101,27 @@ extension MagicBox where T == Data {
     
 }
 
+// MARK: - JSON相关
+extension MagicBox where T == Data {
+    
+    /// 将json数据转成指定类型
+    public func toJson<T>(_ type: T.Type) -> T? {
+        guard let json = try? JSONSerialization.jsonObject(with: value, options: .fragmentsAllowed) else {
+            return nil
+        }
+        return json as? T
+    }
+    
+    /// 将json数据转成字典类型
+    public var jsonMap: [String: Any]? { toJson([String: Any].self) }
+    
+    /// 将json数据转成字典数组
+    public var jsonMapArray: [[String: Any]]? { jsonArray([String: Any].self) }
+    
+    /// 将json数据转成数组类型，并指定数组元素类型
+    public func jsonArray<T>(_ elementType: T.Type) -> [T]? { toJson([T].self) }
+    
+}
 
 // MARK: - tools
 extension MagicBox where T == Data {

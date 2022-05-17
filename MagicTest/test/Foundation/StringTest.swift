@@ -49,4 +49,16 @@ func stringTest() {
     assert(hmacSha384Str == "d517b76e6ddeeba9fe7dee4af1fd935d8c20374a13e3495e1a5822bb89662fbb1bcc6137ac1a915b1e3a221fdda5cfd0", "hmac_sha384 fail")
     let hmacSha512Str = text.mg.hmac(type: .sha512, key: "1234567890").value
     assert(hmacSha512Str == "1b9d7e0b49d34ccf7eccfc9b60f24709e59ce4fc4f5b6ee4321f8885d309ca7f7e42f6b427ffee19ee23e717b4afff68c40ebb415260f568034f5f8592876939", "hmac_sha512 fail")
+    
+    let jsonMapStr = """
+    {"name": "drbox", "age": 30}
+    """
+    let map = jsonMapStr.mg.jsonMap
+    assert(map != nil && (map?["name"] as? String) == "drbox", "jsonMap fail")
+    
+    let jsonArrMapStr = """
+    [{"name": "drbox"}, {"name": "jack"}]
+    """
+    let mapArr = jsonArrMapStr.mg.jsonMapArray
+    assert(mapArr != nil && (mapArr?.first?["name"] as? String) == "drbox", "jsonMapArray fail")
 }

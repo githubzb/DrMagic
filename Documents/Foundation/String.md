@@ -87,3 +87,38 @@ public var hmac(type: MagicBox<Data>.HMACType, key: String) -> MagicBox<String>
 public var hexData: Data
 ```
 
+14、将json字符串转成字典类型，例如：{"key1": "value1"}
+
+```swift
+public var jsonMap: [String: Any]?
+```
+
+15、将json字符串转成字典数组类型，例如：[{"key": "value"}, {"key": "value"}]
+
+```swift
+public var jsonMapArray: [[String: Any]]?
+```
+
+16、将json字符串转成数组类型，并指定数组元素类型。
+
+```swift
+public func jsonArray<T>(_ elementType: T.Type) -> [T]?
+```
+
+17、将json字符串转成指定类型
+
+```swift
+public func toJson<T>(_ type: T.Type) -> T?
+```
+
+18、去掉字符串两端空格和换行符
+
+```swift
+public var trim: MagicBox<String>
+```
+
+19、去掉字符串两端指定的字符串
+
+```swift
+public func trim(_ str: String) -> MagicBox<String>
+```
