@@ -40,7 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         curve25519Test()
         hkdfTest()
         characterSetTest()
-        arrayTest()
+        sequenceTest()
+        uicolorTest()
+        numberTest()
     }
 
 }

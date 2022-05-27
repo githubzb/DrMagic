@@ -1,8 +1,8 @@
 //
-//  ArrayTest.swift
+//  SequenceTest.swift
 //  MagicTest
 //
-//  Created by dr.box on 2022/5/17.
+//  Created by dr.box on 2022/5/19.
 //
 
 import Foundation
@@ -12,9 +12,7 @@ struct People {
     var name: String
     var age: Int
 }
-
-func arrayTest() {
-    
+func sequenceTest() {
     let strList = ["a", "b", "c"]
     let strListJson = strList.mg.jsonString
     assert(strListJson == "[\"a\",\"b\",\"c\"]", "jsonString fail")
@@ -27,8 +25,18 @@ func arrayTest() {
     let intListStr = intList.mg.jsonString
     assert(intListStr == "[1,2,3]", "jsonString fail")
     
+    
     // 下面的会导致crash
 //    let list = [People(name: "drbox", age: 30),People(name: "jack", age: 35)]
 //    let listStr = list.mg.jsonString
 //    assert(listStr == nil, "不能将非序列化的对象转成json字符串")
+    
+    let dic: [String: Any] = ["name": "drbox", "age": 30]
+    let jsonStr = dic.mg.jsonString
+    assert(jsonStr != nil && jsonStr!.count > 0, "jsonString fail")
+    
+    let dic2 = ["name": "drbox"]
+    let json2Str = dic2.mg.jsonString
+    assert(json2Str == "{\"name\":\"drbox\"}", "jsonString fail")
+    
 }

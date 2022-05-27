@@ -1,13 +1,14 @@
 //
-//  Array+ext.swift
+//  Sequence+ext.swift
 //  DrMagic
 //
-//  Created by dr.box on 2022/5/17.
+//  Created by dr.box on 2022/5/19.
 //
 
 import Foundation
 
 extension Array: MagicBoxExt {}
+extension Dictionary: MagicBoxExt {}
 
 extension MagicBox where T: Sequence {
     
