@@ -7,8 +7,9 @@
 
 import UIKit
 import CoreLocation
+import CoreTelephony
 
-public class DrDeviceManager: NSObject {
+public class DrDeviceManager {
     
     public static let share = Static.manager
     private struct Static {
@@ -16,29 +17,15 @@ public class DrDeviceManager: NSObject {
     }
     
     
-    
     // MARK: - 定位功能
     
     // 用于定位
-    fileprivate lazy var locationManager: CLLocationManager = {
-        let lm = CLLocationManager()
-        lm.desiredAccuracy = kCLLocationAccuracyBest
-        return lm
-    }()
-    fileprivate lazy var locationHander: DrLocationHandler = {
-        DrLocationHandler(self)
-    }()
+    private lazy var locationManager: DrLocationManager = DrLocationManager()
     
     /// 定位坐标
-    fileprivate(set) public var location: CLLocation?
+    public var location: CLLocation? { self.locationManager.location }
     // 获取定位状态
-    public var locationAuthStatus: CLAuthorizationStatus {
-        if #available(iOS 14, *) {
-            return locationManager.authorizationStatus
-        } else {
-            return CLLocationManager.authorizationStatus()
-        }
-    }
+    public var locationAuthStatus: CLAuthorizationStatus { self.locationManager.locationAuthStatus }
     
     /**
      更新定位
@@ -47,76 +34,118 @@ public class DrDeviceManager: NSObject {
      - Parameter completed: 更新定位完成回调
      */
     public func updateLocation(needRequestAuth: Bool = true, completed: ((_ location: CLLocation?)->Void)? = nil) {
-        guard CLLocationManager.locationServicesEnabled() else {
-            completed?(nil)
-            drLog("定位服务不可用")
-            return
+        locationManager.updateLocation(needRequestAuth: needRequestAuth, completed: completed)
+    }
+    
+    
+    // MARK: - 网络相关
+    private var networkManager: DrNetworkManager?
+    
+    /**
+     启动网络状态监听
+     
+     - Parameter host: 监听网络的URL.host（可访问的域名，默认：www.baidu.com）
+     
+     - Returns 是否启动监听成功（false：失败）
+     */
+    @discardableResult
+    public func startNetworkListening(host: String = "www.baidu.com") -> Bool {
+        guard let networkManager = DrNetworkManager(host: host) else {
+            return false
         }
-        switch locationAuthStatus {
-        case .notDetermined:
-            if needRequestAuth {
-                locationHander.locationCompleted = completed
-                locationManager.delegate = locationHander
-                locationManager.requestWhenInUseAuthorization()
-            }else {
-                completed?(nil)
-                drLog("未申请定位权限")
+        self.networkManager = networkManager
+        networkManager.startListening(onStateUpdate: { [weak self] (status) in
+            guard let self = self else { return }
+            self.networkStatus = status
+        })
+        return true
+    }
+    
+    /// 停止网络状态监听
+    public func stopNetworkListening() {
+        networkManager?.stopListening()
+        networkManager = nil
+    }
+    
+    /// 判断当前网络是否可达（在未启动网络监听前，该属性一直为false）
+    public var networkIsReachable: Bool {
+        guard let isReachable = networkManager?.flags?.isActuallyReachable else {
+            return false
+        }
+        return isReachable
+    }
+    
+    /// 当前网络状态（在未启动网络监听前，该属性一直为nil）
+    private(set) public var networkStatus: DrNetworkManager.NetworkReachabilityStatus? {
+        set {
+            guard let status = newValue else { return }
+            NotificationCenter.default.post(name: DrDeviceManager.networkStatusNotifyName,
+                                            object: nil,
+                                            userInfo: ["status": status])
+        }
+        get {
+            guard let flags = networkManager?.flags else {
+                return nil
             }
-        case .restricted, .denied:
-            completed?(nil)
-            drLog("定位权限不允许")
-        case .authorizedAlways, .authorizedWhenInUse, .authorized:
-            startLocation(completed: completed)
-        @unknown default:
-            completed?(nil)
-            drLog("未知的定位权限")
+            return DrNetworkManager.NetworkReachabilityStatus(flags)
+        }
+    }
+    /// 监听网络状态通知（userInfo：[status: DrNetworkManager.NetworkReachabilityStatus]）
+    public static let networkStatusNotifyName: NSNotification.Name = .init("com.drbox.notify.network.status")
+    
+    
+    // MARK: - 电话通信运营商
+    
+    /// 手机通信运营商信息（目前仅返回中国三大运营商）
+    public static var mno: MobileProvider? {
+        let info = CTTelephonyNetworkInfo()
+        var carrier: CTCarrier?
+        if #available(iOS 13.0, *) {
+            guard let identifier = info.dataServiceIdentifier else { return nil }
+            guard let _carrier = info.serviceSubscriberCellularProviders?[identifier] else { return nil }
+            carrier = _carrier
+        } else {
+            guard let _carrier = info.subscriberCellularProvider else { return nil }
+            carrier = _carrier
+        }
+        
+        guard let countryCode = carrier?.mobileCountryCode, let networkCode = carrier?.mobileNetworkCode else { return nil }
+        guard countryCode == "460" else { return nil }
+        switch networkCode {
+        case "00", "02", "07": // 中国移动
+            return .cmcc
+        case "03", "05", "11": // 电信
+            return .chinanet
+        case "01", "06", "09": // 联通
+            return .chinaUnicom
+        default:
+            return nil
         }
     }
     
-    // 开始定位
-    func startLocation(completed: ((CLLocation?)->Void)? = nil) {
-        guard CLLocationManager.locationServicesEnabled() else {
-            completed?(nil)
-            drLog("定位服务不可用")
-            return
-        }
-        switch locationAuthStatus {
-        case .authorizedAlways, .authorizedWhenInUse, .authorized:
-            self.locationHander.locationCompleted = completed
-            self.locationManager.delegate = self.locationHander
-            self.locationManager.startUpdatingLocation()
-        default:
-            completed?(nil)
-            drLog("定位权限不允许")
-            break
-        }
+    
+    public enum MobileProvider {
+        /// 中国移动
+        case cmcc
+        /// 中国电信
+        case chinanet
+        /// 中国联通
+        case chinaUnicom
     }
 }
 
-fileprivate class DrLocationHandler: NSObject, CLLocationManagerDelegate {
-    
-    private weak var deviceManager: DrDeviceManager?
-    var locationCompleted: ((CLLocation?)->Void)?
-    
-    init(_ deviceManager: DrDeviceManager) {
-        self.deviceManager = deviceManager
-        super.init()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {
-            return
-        }
-        manager.stopUpdatingLocation()
-        deviceManager?.location = location
-        asyncCallInMain {
-            self.locationCompleted?(location)
-        }
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        asyncCallInMain {
-            self.deviceManager?.startLocation(completed: self.locationCompleted)
+
+extension DrDeviceManager.MobileProvider: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .cmcc:
+            return "中国移动"
+            
+        case .chinanet:
+            return "中国电信"
+            
+        case .chinaUnicom:
+            return "中国联通"
         }
     }
 }

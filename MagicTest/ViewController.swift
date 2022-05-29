@@ -6,12 +6,17 @@
 //
 
 import UIKit
+import DrMagic
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+            
+            drLog("safeArea: \(UIApplication.mg.safeArea)")
+        }
     }
 
     @IBAction func clickDeviceManagerBtn(_ sender: Any) {

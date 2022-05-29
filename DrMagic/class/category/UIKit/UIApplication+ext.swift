@@ -37,6 +37,41 @@ extension MagicBox where T: UIApplication {
         }
     }
     
+    /// 界面的安全区（注意：在applicationState为非活跃状态时，获取到的值是zero）
+    public static var safeArea: UIEdgeInsets { keyWindow?.safeAreaInsets ?? .zero }
+    
+    /// 获取最上层的控制器
+    public static var topViewController: UIViewController? {
+        guard let rootVc = keyWindow?.rootViewController else {
+            return nil
+        }
+        func getTopVc(_ vc: UIViewController) -> UIViewController {
+            if let tabbarVc = vc as? UITabBarController {
+                if tabbarVc.presentedViewController != nil {
+                    return getTopVc(tabbarVc.presentedViewController!)
+                }else if let viewController = tabbarVc.selectedViewController {
+                    return getTopVc(viewController)
+                }else {
+                    return tabbarVc
+                }
+            }
+            if let nav = vc as? UINavigationController {
+                if nav.presentedViewController != nil {
+                    return getTopVc(nav.presentedViewController!)
+                }else if let viewController = nav.topViewController {
+                    return getTopVc(viewController)
+                }else {
+                    return nav
+                }
+            }
+            if let viewController = vc.presentedViewController {
+                return getTopVc(viewController)
+            }
+            return vc
+        }
+        return getTopVc(rootVc)
+    }
+    
     /// 打开系统设置页面
     public static func openSettingPage() {
         guard let url = URL(string: UIApplication.openSettingsURLString) else {
@@ -45,4 +80,6 @@ extension MagicBox where T: UIApplication {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
+    
 }
+

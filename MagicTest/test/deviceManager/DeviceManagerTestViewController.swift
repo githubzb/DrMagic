@@ -19,6 +19,15 @@ class DeviceManagerTestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        drLog("safeArea: \(UIApplication.mg.safeArea)")
+        
+        NotificationCenter.default
+            .rx
+            .notification(DrDeviceManager.networkStatusNotifyName, object: nil)
+            .bind(to: networkStatusNotify)
+            .disposed(by: disposeBag)
+        
+        
         view.dr_flex.define { flex in
             flex.addItem()
                 .direction(.row)
@@ -59,7 +68,41 @@ class DeviceManagerTestViewController: UIViewController {
                     btn.backgroundColor = .blue
                     btn.rx.tap.bind(to: clickNoAuthLocation).disposed(by: disposeBag)
                 }
+            
+            flex.addItem(UIButton(type: .custom))
+                .marginTop(20)
+                .alignSelf(.center)
+                .size(CGSize(width: 120, height: 34))
+                .define { flex in
+                    let btn = flex.view as! UIButton
+                    btn.setTitle("开启网络状态监听", for: .normal)
+                    btn.setTitleColor(.white, for: .normal)
+                    btn.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+                    btn.backgroundColor = .blue
+                    btn.rx.tap.bind(to: startNetworkListening).disposed(by: disposeBag)
+                }
+            
+            flex.addItem(UIButton(type: .custom))
+                .marginTop(20)
+                .alignSelf(.center)
+                .minWidth(120)
+                .height(34)
+                .define { flex in
+                    let btn = flex.view as! UIButton
+                    btn.setTitle("获取当前手机移动运营商", for: .normal)
+                    btn.setTitleColor(.white, for: .normal)
+                    btn.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+                    btn.backgroundColor = .blue
+                    btn.rx.tap.bind(to: mobileProvider).disposed(by: disposeBag)
+                }
+            
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let topVc = UIApplication.mg.topViewController
+        assert(topVc != nil && topVc == self, "topViewController fail")
     }
     
     override func viewWillLayoutSubviews() {
@@ -70,6 +113,55 @@ class DeviceManagerTestViewController: UIViewController {
     var clickCloseBtn: Binder<Void> {
         Binder(self){ (vc, _) in
             vc.dismiss(animated: true)
+        }
+    }
+    
+    var networkStatusNotify: Binder<Notification> {
+        Binder(self){ (vc, notify) in
+            guard let status = notify.userInfo?["status"] as? DrNetworkManager.NetworkReachabilityStatus else {
+                return
+            }
+            switch status {
+            case .notReachable:
+                print("[network]: notReachable")
+                
+            case .reachable(let type):
+                switch type {
+                case .cellular:
+                    print("[network]: cellular")
+                case .ethernetOrWiFi:
+                    print("[network]: ethernetOrWiFi")
+                @unknown default:
+                    print("[network]: reachable unknown")
+                }
+                
+            case .unknown:
+                print("[network]: unknown")
+                
+            @unknown default:
+                print("[network]: unknown status")
+            }
+        }
+    }
+    
+    var mobileProvider: Binder<Void> {
+        Binder(self){ (vc, _) in
+            guard let mno = DrDeviceManager.mno else {
+                print("移动运营商获取失败")
+                return
+            }
+            print("当前手机移动运营商为：\(mno)")
+        }
+    }
+    
+    var startNetworkListening: Binder<Void> {
+        Binder(self){ (vc, _) in
+            DrDeviceManager.share.startNetworkListening()
+            if DrDeviceManager.share.networkIsReachable {
+                print("[network]: networkIsReachable is true")
+            }else {
+                print("[network]: networkIsReachable is false")
+            }
         }
     }
     
