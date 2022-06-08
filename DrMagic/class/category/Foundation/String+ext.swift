@@ -151,3 +151,21 @@ extension MagicBox where T == String {
         MagicBox(value.trimmingCharacters(in: .init(charactersIn: str)))
     }
 }
+
+// MARK: - 富文本html
+extension MagicBox where T == String {
+    
+    /// 解析html文本，转成富文本字符串
+    public var parseHTML: NSAttributedString? {
+        guard let data = value.data(using: .utf8) else { return nil }
+        if let attr = try? NSMutableAttributedString(data: data,
+                                                     options: [
+                                                        .documentType: NSAttributedString.DocumentType.html,
+                                                        .characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)
+                                                     ],
+                                                     documentAttributes: nil) {
+            return NSAttributedString(attributedString: attr)
+        }
+        return nil
+    }
+}

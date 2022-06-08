@@ -50,6 +50,9 @@ public class DrDeviceManager {
      */
     @discardableResult
     public func startNetworkListening(host: String = "www.baidu.com") -> Bool {
+        guard self.networkManager == nil else {
+            return true
+        }
         guard let networkManager = DrNetworkManager(host: host) else {
             return false
         }

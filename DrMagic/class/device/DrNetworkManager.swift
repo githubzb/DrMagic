@@ -7,7 +7,30 @@
 
 import Foundation
 import SystemConfiguration
+import CoreTelephony
 
+fileprivate let kNetwork2G: [String] = [CTRadioAccessTechnologyEdge, CTRadioAccessTechnologyGPRS, CTRadioAccessTechnologyCDMA1x]
+fileprivate let kNetwork3G: [String] = [
+    CTRadioAccessTechnologyHSDPA,
+    CTRadioAccessTechnologyWCDMA,
+    CTRadioAccessTechnologyHSUPA,
+    CTRadioAccessTechnologyCDMAEVDORev0,
+    CTRadioAccessTechnologyCDMAEVDORevA,
+    CTRadioAccessTechnologyCDMAEVDORevB,
+    CTRadioAccessTechnologyeHRPD,
+]
+fileprivate let kNetwork4G: [String] = [CTRadioAccessTechnologyLTE]
+
+fileprivate func currentRadioAccessTechnology() -> String {
+    let info = CTTelephonyNetworkInfo()
+    if #available(iOS 13.0, *) {
+        guard let identifier = info.dataServiceIdentifier else { return "" }
+        guard let map = info.serviceCurrentRadioAccessTechnology else { return "" }
+        return map[identifier] ?? ""
+    } else {
+        return info.currentRadioAccessTechnology ?? ""
+    }
+}
 
 public class DrNetworkManager {
     
@@ -27,15 +50,40 @@ public class DrNetworkManager {
 
             var networkStatus: NetworkReachabilityStatus = .reachable(.ethernetOrWiFi)
 
-            if flags.isCellular { networkStatus = .reachable(.cellular) }
+            if flags.isCellular {
+                let radio = currentRadioAccessTechnology()
+                if kNetwork4G.contains(radio) {
+                    networkStatus = .reachable(.cellular4G)
+                }else if kNetwork3G.contains(radio) {
+                    networkStatus = .reachable(.cellular3G)
+                }else if kNetwork2G.contains(radio) {
+                    networkStatus = .reachable(.cellular2G)
+                }else {
+                    networkStatus = .reachable(.cellular)
+                }
+            }
             
             self = networkStatus
+        }
+        
+        /// 当前网络是WIFI
+        public var isWifi: Bool {
+            if case .reachable(let type) = self {
+                return type == .ethernetOrWiFi
+            }
+            return false
         }
 
         /// 网络类型
         public enum ConnectionType {
             /// 网络类型：以太网或wifi
             case ethernetOrWiFi
+            /// 网络类型：蜂窝网络2G
+            case cellular2G
+            /// 网络类型：蜂窝网络3G
+            case cellular3G
+            /// 网络类型：蜂窝网络4G
+            case cellular4G
             /// 网络类型：蜂窝网络
             case cellular
         }

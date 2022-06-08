@@ -263,7 +263,6 @@
 			isa = PBXGroup;
 			children = (
 				6D4DDD182842FE6700DC7421 /* DrLocationManager.swift */,
-				6D4DDD1A2843014C00DC7421 /* DrNetworkManager.swift */,
 			);
 			path = location;
 			sourceTree = "<group>";
@@ -299,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				6D4DDD172842FE3C00DC7421 /* location */,
+				6D4DDD1A2843014C00DC7421 /* DrNetworkManager.swift */,
 				6DE96C15283F1E1C00EAD1D4 /* DrDeviceManager.swift */,
 			);
 			path = device;
