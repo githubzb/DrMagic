@@ -150,6 +150,16 @@ extension MagicBox where T == String {
     public func trim(_ str: String) -> Self {
         MagicBox(value.trimmingCharacters(in: .init(charactersIn: str)))
     }
+    
+    /// 截取两个字符串之间的字符串
+    public func subString(from: String, to: String) -> Self? {
+        (value.range(of: from)?.upperBound).flatMap { fromIdx in
+            (value.range(of: to, range: fromIdx..<value.endIndex)?.lowerBound)
+                .flatMap { toIdx in
+                    MagicBox(String(value[fromIdx..<toIdx]))
+                }
+        }
+    }
 }
 
 // MARK: - 富文本html

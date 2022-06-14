@@ -1,0 +1,33 @@
+PODS:
+  - DrFlexLayout-swift/Core (1.1.0)
+  - DrFlexLayout-swift/rx (1.1.0):
+    - DrFlexLayout-swift/Core (= 1.1.0)
+    - RxCocoa (~> 6.5.0)
+    - RxSwift (~> 6.5.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
+
+DEPENDENCIES:
+  - DrFlexLayout-swift/Core (~> 1.1.0)
+  - DrFlexLayout-swift/rx (~> 1.1.0)
+
+SPEC REPOS:
+  trunk:
+    - DrFlexLayout-swift
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+
+SPEC CHECKSUMS:
+  DrFlexLayout-swift: 6080f98000b445c19c554a9c290f08f1630a9fa8
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+
+PODFILE CHECKSUM: 727afc64ca0d31c64255479aa385409fd4631a56
+
+COCOAPODS: 1.11.3

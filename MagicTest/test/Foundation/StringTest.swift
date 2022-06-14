@@ -67,4 +67,12 @@ func stringTest() {
     let strArr = jsonStrArr.mg.jsonArray(String.self)
     assert(strArr != nil && strArr?.count == 3, "jsonArray fail")
     
+    
+    let sstr = "#name:drbox#age:34#"
+    if let name = sstr.mg.subString(from: "name:", to: "#")?.value,
+       let age =  sstr.mg.subString(from: "age:", to: "#")?.value {
+        assert(name == "drbox" && age == "34", "subString fail")
+    }else {
+        assert(false, "subString fail")
+    }
 }
