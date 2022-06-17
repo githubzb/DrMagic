@@ -68,11 +68,16 @@ func stringTest() {
     assert(strArr != nil && strArr?.count == 3, "jsonArray fail")
     
     
-    let sstr = "#name:drbox#age:34#"
-    if let name = sstr.mg.subString(from: "name:", to: "#")?.value,
-       let age =  sstr.mg.subString(from: "age:", to: "#")?.value {
-        assert(name == "drbox" && age == "34", "subString fail")
-    }else {
-        assert(false, "subString fail")
-    }
+    let astr = "abc123bcd"
+    // 正常截取
+    let s1 = astr.mg.subString(range: .init(location: 3, length: 3))
+    assert(s1 != nil && s1!.value == "123", "截取字符串失败")
+    
+    // 下标越界
+    let s2 = astr.mg.subString(range: .init(location: -20, length: 2))
+    assert(s2 == nil, "越界应该返回nil")
+    
+    // 长度越界
+    let s3 = astr.mg.subString(range: .init(location: 5, length: 100))
+    assert(s3 == nil, "越界应该返回nil")
 }
