@@ -41,6 +41,9 @@
 		6D93A6AF2840A0BB000CE9D0 /* UIApplication+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D93A6AE2840A0BB000CE9D0 /* UIApplication+ext.swift */; };
 		6D93A6B12840A22A000CE9D0 /* Funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D93A6B02840A22A000CE9D0 /* Funcs.swift */; };
 		6D93A6B62840BC7C000CE9D0 /* DrMagic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D3AB3C3282946A300A2853C /* DrMagic.framework */; };
+		6DB69201285C27AD00FFDB91 /* UIViewController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB69200285C27AD00FFDB91 /* UIViewController+ext.swift */; };
+		6DB69204285C5E0900FFDB91 /* PresentTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB69203285C5E0900FFDB91 /* PresentTestViewController.swift */; };
+		6DB69206285C633800FFDB91 /* MyModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB69205285C633800FFDB91 /* MyModalViewController.swift */; };
 		6DE003A1282FAD4B00D893B1 /* DrAES.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE003A0282FAD4B00D893B1 /* DrAES.swift */; };
 		6DE96C16283F1E1D00EAD1D4 /* DrDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE96C15283F1E1C00EAD1D4 /* DrDeviceManager.swift */; };
 		6DE9E4F42832871B008355B3 /* HKDFTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE9E4F32832871B008355B3 /* HKDFTest.swift */; };
@@ -93,6 +96,9 @@
 		6D93A6AC28409E87000CE9D0 /* DeviceManagerTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerTestViewController.swift; sourceTree = "<group>"; };
 		6D93A6AE2840A0BB000CE9D0 /* UIApplication+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ext.swift"; sourceTree = "<group>"; };
 		6D93A6B02840A22A000CE9D0 /* Funcs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funcs.swift; sourceTree = "<group>"; };
+		6DB69200285C27AD00FFDB91 /* UIViewController+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ext.swift"; sourceTree = "<group>"; };
+		6DB69203285C5E0900FFDB91 /* PresentTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentTestViewController.swift; sourceTree = "<group>"; };
+		6DB69205285C633800FFDB91 /* MyModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyModalViewController.swift; sourceTree = "<group>"; };
 		6DE003A0282FAD4B00D893B1 /* DrAES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrAES.swift; sourceTree = "<group>"; };
 		6DE96C15283F1E1C00EAD1D4 /* DrDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrDeviceManager.swift; sourceTree = "<group>"; };
 		6DE9E4F32832871B008355B3 /* HKDFTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKDFTest.swift; sourceTree = "<group>"; };
@@ -209,6 +215,7 @@
 				6D3AB3D12829481A00A2853C /* CGRect+ext.swift */,
 				6D39E08C283679320085AF8C /* UIColor+ext.swift */,
 				6D93A6AE2840A0BB000CE9D0 /* UIApplication+ext.swift */,
+				6DB69200285C27AD00FFDB91 /* UIViewController+ext.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -231,6 +238,7 @@
 		6D3AB3EB2829489500A2853C /* test */ = {
 			isa = PBXGroup;
 			children = (
+				6DB69202285C5DDE00FFDB91 /* present */,
 				6D93A6AB28409E52000CE9D0 /* deviceManager */,
 				849B1746282D17EF00C09C4F /* security */,
 				849B173C282A497900C09C4F /* Foundation */,
@@ -292,6 +300,15 @@
 				6D93A6AC28409E87000CE9D0 /* DeviceManagerTestViewController.swift */,
 			);
 			path = deviceManager;
+			sourceTree = "<group>";
+		};
+		6DB69202285C5DDE00FFDB91 /* present */ = {
+			isa = PBXGroup;
+			children = (
+				6DB69203285C5E0900FFDB91 /* PresentTestViewController.swift */,
+				6DB69205285C633800FFDB91 /* MyModalViewController.swift */,
+			);
+			path = present;
 			sourceTree = "<group>";
 		};
 		6DE96C14283F1DCC00EAD1D4 /* device */ = {
@@ -546,6 +563,7 @@
 				6D250C6228312EE3003B0FB6 /* DrCurve25519.swift in Sources */,
 				849B18692832415B00C09C4F /* DrHKDF.swift in Sources */,
 				6D4DDD222843083F00DC7421 /* DrSemaphoreLock.swift in Sources */,
+				6DB69201285C27AD00FFDB91 /* UIViewController+ext.swift in Sources */,
 				6D4DDD202843069200DC7421 /* DrUnfairLock.swift in Sources */,
 				6DE96C16283F1E1D00EAD1D4 /* DrDeviceManager.swift in Sources */,
 				6D21378C283E432C00D200B6 /* Logger.swift in Sources */,
@@ -568,7 +586,9 @@
 				6D3AB3DA2829487000A2853C /* AppDelegate.swift in Sources */,
 				6D5D34FD283D154B00F351C4 /* NumberTest.swift in Sources */,
 				6D3AB3DC2829487000A2853C /* SceneDelegate.swift in Sources */,
+				6DB69206285C633800FFDB91 /* MyModalViewController.swift in Sources */,
 				6D39E08B283678170085AF8C /* SequenceTest.swift in Sources */,
+				6DB69204285C5E0900FFDB91 /* PresentTestViewController.swift in Sources */,
 				6D3AB3EE282948CA00A2853C /* CGRectTest.swift in Sources */,
 				849B18662831DD2600C09C4F /* Curve25519Test.swift in Sources */,
 				6DE9E4F42832871B008355B3 /* HKDFTest.swift in Sources */,

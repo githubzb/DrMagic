@@ -151,6 +151,18 @@ extension MagicBox where T == String {
         MagicBox(value.trimmingCharacters(in: .init(charactersIn: str)))
     }
     
+    /// 安全的截取字符串
+    public func subString(range: NSRange) -> MagicBox? {
+            guard 0 <= range.location && range.location < value.count,
+                        range.location + range.length < value.count else {
+                                return nil
+                        }
+            let begin = value.index(value.startIndex, offsetBy: range.location)
+            let end = value.index(begin, offsetBy: range.length)
+            return MagicBox(String(value[begin..<end]))
+    }
+    
+    
 }
 
 // MARK: - 富文本html

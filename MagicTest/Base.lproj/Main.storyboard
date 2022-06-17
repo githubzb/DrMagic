@@ -39,11 +39,25 @@
                                     <action selector="clickDeviceManagerBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eTj-cg-2oK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OuX-EM-OoQ">
+                                <rect key="frame" x="299" y="123" width="100" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="8Em-FU-bPC"/>
+                                    <constraint firstAttribute="width" constant="100" id="vLa-7v-eP0"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="present"/>
+                                <connections>
+                                    <action selector="clickPresentBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vL6-PZ-5Tb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eM7-d3-l4L" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="79" id="D4U-80-whb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OuX-EM-OoQ" secondAttribute="trailing" constant="15" id="HTJ-y6-H3a"/>
+                            <constraint firstItem="OuX-EM-OoQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="79" id="WZF-dl-QMF"/>
                             <constraint firstItem="aDc-fZ-eBo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XH4-eI-cIK"/>
                             <constraint firstItem="aDc-fZ-eBo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-372.5" id="o48-UR-rrU"/>
                             <constraint firstItem="eM7-d3-l4L" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="pUM-zo-L83"/>

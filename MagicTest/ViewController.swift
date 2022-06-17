@@ -25,5 +25,10 @@ class ViewController: UIViewController {
         present(vc, animated: true)
     }
     
+    @IBAction func clickPresentBtn(_ sender: Any) {
+        let vc = PresentTestViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
 }
 
