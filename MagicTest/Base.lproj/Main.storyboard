@@ -51,14 +51,28 @@
                                     <action selector="clickPresentBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vL6-PZ-5Tb"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WmR-Ga-k9s">
+                                <rect key="frame" x="20" y="217" width="115" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="9Op-vM-dm5"/>
+                                    <constraint firstAttribute="width" constant="115" id="byq-ap-OiU"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Timer"/>
+                                <connections>
+                                    <action selector="clickTimerBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zFY-iW-dXV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="WmR-Ga-k9s" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="6ZU-EY-dwi"/>
                             <constraint firstItem="eM7-d3-l4L" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="79" id="D4U-80-whb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OuX-EM-OoQ" secondAttribute="trailing" constant="15" id="HTJ-y6-H3a"/>
                             <constraint firstItem="OuX-EM-OoQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="79" id="WZF-dl-QMF"/>
                             <constraint firstItem="aDc-fZ-eBo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XH4-eI-cIK"/>
+                            <constraint firstItem="WmR-Ga-k9s" firstAttribute="top" secondItem="eM7-d3-l4L" secondAttribute="bottom" constant="46" id="bV2-k7-R2D"/>
                             <constraint firstItem="aDc-fZ-eBo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-372.5" id="o48-UR-rrU"/>
                             <constraint firstItem="eM7-d3-l4L" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="pUM-zo-L83"/>
                         </constraints>

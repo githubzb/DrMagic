@@ -30,5 +30,12 @@ class ViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
+    
+    @IBAction func clickTimerBtn(_ sender: Any) {
+        let vc = TimerTestViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
 }
 
